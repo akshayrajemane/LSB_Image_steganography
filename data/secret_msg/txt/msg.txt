@@ -1,0 +1,1 @@
+This is secret message file. My secret message is, "I am working on lsb image steganography project secretly.
