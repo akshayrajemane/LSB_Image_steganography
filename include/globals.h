@@ -12,6 +12,7 @@
 	#include <unistd.h>
 #else //Default OS is Windows
 	#include <direct.h>
+	#include <unistd.h>
 #endif
 
 
