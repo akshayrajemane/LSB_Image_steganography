@@ -20,10 +20,11 @@
 
 #include "config.h"
 
-extern char secret_msg_file_path[MAX_PATH_SIZE];
-extern char secret_msg_file_name[MAX_FILE_NAME_SIZE];
-extern char cover_medium_bmp_image_file_path[MAX_PATH_SIZE];
+extern char secret_msg_txt_file_name[MAX_FILE_NAME_SIZE];
+extern char secret_msg_txt_file_path[MAX_PATH_SIZE];
 extern char cover_medium_bmp_image_file_name[MAX_FILE_NAME_SIZE];
+extern char cover_medium_bmp_image_file_path[MAX_PATH_SIZE];
+
 
 typedef struct //Total - 14 Bytes
 {

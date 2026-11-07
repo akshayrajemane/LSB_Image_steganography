@@ -70,15 +70,25 @@ int get_input_cover_medium_file_path(const char *file_name, char *full_file_path
 	
 }
 
-int get_new_header_from_bmp_image_file(bmp_bit_map_new_header *new_header)
+int get_file_paths_from_file_names()
 {
 	if(get_input_cover_medium_file_path(cover_medium_bmp_image_file_name, cover_medium_bmp_image_file_path))
 	{
 		printf("process_input.h : Error getting cover medium image file path\n");
 		return -1;
 	}
+	
+	if(get_input_secret_message_file_path(secret_msg_txt_file_name, secret_msg_txt_file_path))
+	{
+		printf("process_input.h : Error getting secret message txt file path\n");
+		return -1;
+	}
+	
+	return 0;
+}
 
-
+int get_new_header_from_bmp_image_file(bmp_bit_map_new_header *new_header)
+{
 	FILE* fptr = fopen(cover_medium_bmp_image_file_path, "rb");
 		
 	if(fptr == NULL)
@@ -206,7 +216,41 @@ int get_new_header_from_bmp_image_file(bmp_bit_map_new_header *new_header)
 	printf("biYPelsPerMeter = %d\n", new_header->info_header.biYPelsPerMeter);
 	printf("biClrUsed = %d\n", new_header->info_header.biClrUsed);
 	printf("biClrImportant = %d\n", new_header->info_header.biClrImportant);
-		
+	
+	fclose(fptr);		
 	return 0;
+	
+}
+
+int check_cover_medium_image_file_ok()
+{
+	long int byte_image_pixel_data_size;
+	long int byte_txt_file_size = 0;
+	long int required_pixel_data_size = 0;
+	
+	
+	bmp_bit_map_new_header new_header;
+	get_new_header_from_bmp_image_file(&new_header);
+	
+	byte_image_pixel_data_size = new_header.info_header.biWidth * new_header.info_header.biHeight * new_header.info_header.biBitCount;
+	//byte_txt_file_size = function_call(check_txt_file_size);
+	
+	required_pixel_data_size += 2;						//2 Bytes - (#*) Magic string
+	required_pixel_data_size += 4;						//4 Bytes - File extension length
+	required_pixel_data_size += 4;						//4 Bytes - (.txt) File extension
+	required_pixel_data_size += 4;						//4 Bytes - secret message data size
+	required_pixel_data_size += byte_txt_file_size;     //n Bytes - secret message size
+	required_pixel_data_size *= 8;						//multiplication factor - 8 Bytes needed to embedded 1 Byte of data
+	
+	if(byte_image_pixel_data_size > required_pixel_data_size)
+	{
+		printf("BMP image file is ok!");
+		return 0;
+	}
+	else
+	{
+		printf("BMP image file is NOT ok!");
+		return -1;
+	}
 	
 }

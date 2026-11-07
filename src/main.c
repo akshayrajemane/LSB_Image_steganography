@@ -2,24 +2,22 @@
 #include "globals.h"
 
 //Global Variables
-char secret_msg_file_name[MAX_FILE_NAME_SIZE] = "msg.txt";
-char secret_msg_path_name[MAX_PATH_SIZE] = " ";
+char secret_msg_txt_file_name[MAX_FILE_NAME_SIZE] = "msg.txt";
+char secret_msg_txt_file_path[MAX_PATH_SIZE] = " ";
 char cover_medium_bmp_image_file_name[MAX_FILE_NAME_SIZE] = "image.bmp";
 char cover_medium_bmp_image_file_path[MAX_PATH_SIZE] = "";
 
+void init()
+{
+	get_file_paths_from_file_names();
+}
+
 int main()
 {
-	/* 
-	// Test code
-	bmp_bit_map_new_header new_header;
+	init();
 	
-	if(!get_input_secret_message_file_path(secret_msg_file_name, secret_msg_path_name))
-	{
-		printf("From main :  %s \n", secret_msg_path_name);
-	}
+	check_cover_medium_image_file_ok();
 	
-	get_new_header_from_bmp_image_file(&new_header);
-	*/
 	
 	return 0;
 }
