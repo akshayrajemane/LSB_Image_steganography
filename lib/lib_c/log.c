@@ -1,8 +1,10 @@
 #include "log.h"
 
+char log_file_path[2048]; //Don't add into project globals untill necessary
+
 void get_log_file_path(char *file_path)
 {
-	if(getcwd(file_path, 1024) != NULL)
+	if(getcwd(file_path, 2048) != NULL)
 	{
 		printf("CWD path = %s\n", file_path);
 		if(WIN32_OS || WIN64_OS)
@@ -23,11 +25,12 @@ void get_log_file_path(char *file_path)
 	}
 }
 
-void create_log_file(char *log_file_path)
+void create_log_file()
 {
 	FILE* fp;
 	const char *data = "**********This is the start of log file**********";
 	
+	get_log_file_path(log_file_path);
 	fp = fopen(log_file_path, "w");
 	if(fp == NULL)
 	{
@@ -55,53 +58,69 @@ int logger(char *log_file_path, char *data)
 	else
 	{
 		fputs(data, fp);
-		fputs("\n", fp);
+		//fputs("\n", fp);
 		fclose(fp);
 		return 0;
 	}	
 }
 
-void log_info(char *log_file_path, int time_stamp, char *f_name, char *msg)
-{
-	int msg_size = strlen(msg);
-	msg_size = msg_size + 128; //adding 128 bytes exter for time_stamp + INFO + file_name
-	char data[msg_size];
+void log_info(int time_stamp, char *f_name, const char *fmt, ...)
+{	
+	char buffer[4096];
+	char data[4096 + 128]; //adding 128 bytes extera for time_stamp + INFO + file_name
+	
+	va_list args;
+	va_start(args, fmt);
+	vsnprintf(buffer, sizeof(buffer), fmt, args);
+	va_end(args);
 	
 	//Implement LOG_INFO level(info,warning,error,debug) check before printing message.
-	sprintf(data,"[%d] [INFO] [%s] [%s] \n", time_stamp, f_name, msg);
+	sprintf(data,"[%d] [INFO] [%s] [%s] \n", time_stamp, f_name, buffer);
 	logger(log_file_path, data);
 }
 
-void log_warning(char *log_file_path, int time_stamp, char *f_name, char *msg)
+void log_warning(int time_stamp, char *f_name, const char *fmt, ...)
 {
-	int msg_size = strlen(msg);
-	msg_size = msg_size + 128; //adding 128 bytes exter for time_stamp + WARNING + file_name
-	char data[msg_size];
+	char buffer[4096];
+	char data[4096 + 128]; //adding 128 bytes extera for time_stamp + INFO + file_name
+	
+	va_list args;
+	va_start(args, fmt);
+	vsnprintf(buffer, sizeof(buffer), fmt, args);
+	va_end(args);
 	
 	//Implement LOG_INFO level(info,warning,error,debug) check before printing message.
-	sprintf(data,"[%d] [INFO] [%s] [%s] \n", time_stamp, f_name, msg);
+	sprintf(data,"[%d] [WARNING] [%s] [%s] \n", time_stamp, f_name, buffer);
 	logger(log_file_path, data);
 }
 
-void log_error(char *log_file_path, int time_stamp, char *f_name, char *msg)
+void log_error(int time_stamp, char *f_name, const char *fmt, ...)
 {
-	int msg_size = strlen(msg);
-	msg_size = msg_size + 128; //adding 128 bytes exter for time_stamp + ERROR + file_name
-	char data[msg_size];
+	char buffer[4096];
+	char data[4096 + 128]; //adding 128 bytes extera for time_stamp + INFO + file_name
+	
+	va_list args;
+	va_start(args, fmt);
+	vsnprintf(buffer, sizeof(buffer), fmt, args);
+	va_end(args);
 	
 	//Implement LOG_INFO level(info,warning,error,debug) check before printing message.
-	sprintf(data,"[%d] [INFO] [%s] [%s] \n", time_stamp, f_name, msg);
+	sprintf(data,"[%d] [ERROR] [%s] [%s] \n", time_stamp, f_name, buffer);
 	logger(log_file_path, data);
 }
 
-void log_debug(char *log_file_path, int time_stamp, char *f_name, char *msg)
+void log_debug(int time_stamp, char *f_name, const char *fmt, ...)
 {
-	int msg_size = strlen(msg);
-	msg_size = msg_size + 128; //adding 128 bytes exter for time_stamp + DEBUG + file_name
-	char data[msg_size];
+	char buffer[4096];
+	char data[4096 + 128]; //adding 128 bytes extera for time_stamp + INFO + file_name
+	
+	va_list args;
+	va_start(args, fmt);
+	vsnprintf(buffer, sizeof(buffer), fmt, args);
+	va_end(args);
 	
 	//Implement LOG_INFO level(info,warning,error,debug) check before printing message.
-	sprintf(data,"[%d] [INFO] [%s] [%s] \n", time_stamp, f_name, msg);
+	sprintf(data,"[%d] [DEBUG] [%s] [%s] \n", time_stamp, f_name, buffer);
 	logger(log_file_path, data);
 }
 

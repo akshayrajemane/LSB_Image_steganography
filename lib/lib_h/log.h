@@ -23,6 +23,8 @@
 	#include <unistd.h>
 #endif
 
+#include <stdarg.h>
+
 typedef enum 
 {
 	LOG_INFO, //0
@@ -32,11 +34,11 @@ typedef enum
 } LOG_LEVEL; //4
 
 void get_log_file_path(char *file_path);
-void create_log_file(char *log_file_path);
-int logger(char *log_file_path, char *msg);
-void log_info(char *log_file_path, int time_stamp, char *f_name, char *msg);
-void log_warning(char *log_file_path, int time_stamp, char *f_name, char *msg);
-void log_error(char *log_file_path, int time_stamp, char *f_name, char *msg);
-void log_debug(char *log_file_path, int time_stamp, char *f_name, char *msg);
+void create_log_file();
+int logger(char *log_file_path, char *data);
+void log_info(int time_stamp, char *f_name, const char *fmt, ...);
+void log_warning(int time_stamp, char *f_name, const char *fmt, ...);
+void log_error(int time_stamp, char *f_name, const char *fmt, ...);
+void log_debug(int time_stamp, char *f_name, const char *fmt, ...);
 
 #endif

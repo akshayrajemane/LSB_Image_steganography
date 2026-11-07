@@ -19,12 +19,16 @@
 
 
 #include "config.h"
+#include "lib.h"
+#include "log.h"
+
+extern double start_time_s;
+extern double start_time_ns;
 
 extern char secret_msg_txt_file_name[MAX_FILE_NAME_SIZE];
 extern char secret_msg_txt_file_path[MAX_PATH_SIZE];
 extern char cover_medium_bmp_image_file_name[MAX_FILE_NAME_SIZE];
 extern char cover_medium_bmp_image_file_path[MAX_PATH_SIZE];
-
 
 typedef struct //Total - 14 Bytes
 {
