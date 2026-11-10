@@ -27,3 +27,18 @@ uint32_t convert_endian(uint32_t value)
 {
 	return (	((value & 0x000000FF) << 24)	|	((value & 0x0000FF00) << 8)	|	((value & 0x00FF0000) >> 8) |	((value & 0xFF000000) >> 24)	);
 }
+
+
+long get_file_size(const char *file_name)
+{
+        FILE *fptr = fopen(file_name,"rb");
+        if(fptr == NULL)
+        {
+		printf("Error : lib.c, Error, opening the file: %s\n",file_name); 
+                return -1;
+        }
+        fseek(fptr,0,SEEK_END);
+        long size = ftell(fptr);
+        fclose(fptr);
+        return size;
+}

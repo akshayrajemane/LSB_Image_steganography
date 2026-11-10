@@ -2,8 +2,9 @@
 
 int get_input_secret_message_file_path(const char *file_name, char *full_file_path)
 {
-	char *relative_path = "\\data\\secret_msg\\txt\\";
-	
+	char *relative_path = "/data/secret_msg/txt/";
+//	char *relative_path = "\\data\\secret_msg\\txt\\"; //for win_os
+
 	if(getcwd(full_file_path, MAX_PATH_SIZE) == NULL)
 	{
 		log_error(get_time_stamp(start_time_s,start_time_ns), "process_input.c", "Error, getting the current working directory path.");
@@ -31,23 +32,28 @@ int get_input_cover_medium_file_path(const char *file_name, char *full_file_path
 	{
 		if(!strcmp(ext,".txt"))
 		{
-			relative_path = "\\data\\cover_medium\\txt\\";
+			relative_path = "/data/cover_medium/txt/";
+		//	relative_path = "\\data\\cover_medium\\txt\\"; //for win_os
 		}
 		else if(!strcmp(ext,".jpg") || !strcmp(ext,".png") || !strcmp(ext,".jpeg") || !strcmp(ext,".bmp"))
 		{
-			relative_path = "\\data\\cover_medium\\img\\";			
+			relative_path = "/data/cover_medium/img/";			
+		//	relative_path = "\\data\\cover_medium\\img\\"; //for win_os
 		}
 		else if(!strcmp(ext,".mp3") || !strcmp(ext,".wav"))
 		{
-			relative_path = "\\data\\cover_medium\\aud\\";			
+			relative_path = "/data/cover_medium/aud/";			
+		//	relative_path = "\\data\\cover_medium\\aud\\"; //for win_os		
 		}
 		else if(!strcmp(ext,".mp4") || !strcmp(ext,".mkv") || !strcmp(ext,".avi"))
 		{
-			relative_path = "\\data\\cover_medium\\vid\\";			
+			relative_path = "/data/cover_medium/vid/";			
+		//	relative_path = "\\data\\cover_medium\\vid\\";	//for win_os	
 		}
 		else if(!strcmp(ext,".bin"))
 		{
-			relative_path = "\\data\\cover_medium\\bin\\";
+			relative_path = "/data/cover_medium/bin/";
+		//	relative_path = "\\data\\cover_medium\\bin\\"; //for win_os
 		}
 		else
 		{
@@ -234,7 +240,7 @@ int check_cover_medium_image_file_ok()
 	get_new_header_from_bmp_image_file(&new_header);
 	
 	byte_image_pixel_data_size = new_header.info_header.biWidth * new_header.info_header.biHeight * new_header.info_header.biBitCount;
-	//byte_txt_file_size = function_call(check_txt_file_size);
+	byte_txt_file_size = get_file_size(secret_msg_txt_file_path); 
 	
 	required_pixel_data_size += 2;						//2 Bytes - (#*) Magic string
 	required_pixel_data_size += 4;						//4 Bytes - File extension length
@@ -242,6 +248,11 @@ int check_cover_medium_image_file_ok()
 	required_pixel_data_size += 4;						//4 Bytes - secret message data size
 	required_pixel_data_size += byte_txt_file_size;     //n Bytes - secret message size
 	required_pixel_data_size *= 8;						//multiplication factor - 8 Bytes needed to embedded 1 Byte of data
+	
+	
+	log_info(get_time_stamp(start_time_s,start_time_ns), "process_input.c", "Secret Msg text file size [Bytes] = %ld",byte_txt_file_size);
+	log_info(get_time_stamp(start_time_s,start_time_ns), "process_input.c", "Required Pixel data size [Bytes] = %ld",required_pixel_data_size);
+	log_info(get_time_stamp(start_time_s,start_time_ns), "process_input.c", "Image pixel data size [Bytes] = %ld",byte_image_pixel_data_size);
 	
 	if(byte_image_pixel_data_size > required_pixel_data_size)
 	{
