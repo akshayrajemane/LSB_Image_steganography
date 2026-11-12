@@ -2,8 +2,17 @@
 
 int get_input_secret_message_file_path(const char *file_name, char *full_file_path)
 {
-	char *relative_path = "/data/secret_msg/txt/";
-//	char *relative_path = "\\data\\secret_msg\\txt\\"; //for win_os
+	char *relative_path;
+	
+	if(WIN32_OS || WIN64_OS)
+	{
+		relative_path = "\\data\\secret_msg\\txt\\";
+	}
+		
+	if(LIN_OS)
+	{
+		relative_path = "/data/secret_msg/txt/";
+	}
 
 	if(getcwd(full_file_path, MAX_PATH_SIZE) == NULL)
 	{
@@ -32,28 +41,63 @@ int get_input_cover_medium_file_path(const char *file_name, char *full_file_path
 	{
 		if(!strcmp(ext,".txt"))
 		{
-			relative_path = "/data/cover_medium/txt/";
-		//	relative_path = "\\data\\cover_medium\\txt\\"; //for win_os
+			if(WIN32_OS || WIN64_OS)
+			{
+				relative_path = "\\data\\cover_medium\\txt\\";
+			}
+		
+			if(LIN_OS)
+			{
+				relative_path = "/data/cover_medium/txt/";
+			}
 		}
 		else if(!strcmp(ext,".jpg") || !strcmp(ext,".png") || !strcmp(ext,".jpeg") || !strcmp(ext,".bmp"))
 		{
-			relative_path = "/data/cover_medium/img/";			
-		//	relative_path = "\\data\\cover_medium\\img\\"; //for win_os
+			if(WIN32_OS || WIN64_OS)
+			{
+				relative_path = "\\data\\cover_medium\\img\\";
+			}
+		
+			if(LIN_OS)
+			{
+				relative_path = "/data/cover_medium/img/";
+			}
 		}
 		else if(!strcmp(ext,".mp3") || !strcmp(ext,".wav"))
 		{
-			relative_path = "/data/cover_medium/aud/";			
-		//	relative_path = "\\data\\cover_medium\\aud\\"; //for win_os		
+			if(WIN32_OS || WIN64_OS)
+			{
+				relative_path = "\\data\\cover_medium\\aud\\";
+			}
+		
+			if(LIN_OS)
+			{
+				relative_path = "/data/cover_medium/aud/";
+			}		
 		}
 		else if(!strcmp(ext,".mp4") || !strcmp(ext,".mkv") || !strcmp(ext,".avi"))
 		{
-			relative_path = "/data/cover_medium/vid/";			
-		//	relative_path = "\\data\\cover_medium\\vid\\";	//for win_os	
+			if(WIN32_OS || WIN64_OS)
+			{
+				relative_path = "\\data\\cover_medium\\vid\\";
+			}
+		
+			if(LIN_OS)
+			{
+				relative_path = "/data/cover_medium/vid/";
+			}
 		}
 		else if(!strcmp(ext,".bin"))
 		{
-			relative_path = "/data/cover_medium/bin/";
-		//	relative_path = "\\data\\cover_medium\\bin\\"; //for win_os
+			if(WIN32_OS || WIN64_OS)
+			{
+				relative_path = "\\data\\cover_medium\\bin\\";
+			}
+		
+			if(LIN_OS)
+			{
+				relative_path = "/data/cover_medium/bin/";
+			}
 		}
 		else
 		{

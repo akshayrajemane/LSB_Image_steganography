@@ -1,0 +1,59 @@
+Below is the BMP image file header structure defined.
+
+BMP_BIT_MAP_FILE_HEADER (14 Bytes)
+		--	(2 Bytes) bfType;			--> must be BM 0x424D
+		--	(4 Bytes) bfSize;			--> size of BMP file in byes
+		--	(2 Bytes) bfReserved1;		--> must be 0
+		--	(2 Bytes) bfReserved2;		--> must be 0
+		--	(4 Bytes) bfOffBits;		--> starting byte address of image data
+		
+BMP_BIT_MAP_CORE_HEADER (12 Bytes)
+		--	(4 Bytes) bcSize;			--> must be 12 (size of this header file)
+		--	(2 Bytes) bcWidth;			--> pixel width
+		--	(2 Bytes) bcHeight;			--> pixel height
+		--	(2 Bytes) bcPlanes;			--> No. of color planes
+		--	(2 Bytes) bcBitCount;		--> bits per pixel
+
+BMP_BIT_MAP_INFO_HEADER (40 Bytes)
+		--	(4 Bytes) biSize;			--> must be 40 (size of this header file) (can be 108 for BITMAPV4HEADER or 124 for BITMAPV5HEADER)
+		--	(4 Bytes) biWidth;			--> pixel width
+		--	(4 Bytes) biHeight;			--> pixel height (can be negative, can not be zero)
+		--	(2 Bytes) biPlanes;			--> The number of color planes
+		--	(2 Bytes) biBitCount;		--> bits per pixel (1,4,8,16.24,32)
+		--	(4 Bytes) biCompression;	--> compression method being used.
+		--	(4 Bytes) biSizeImage;		--> image size(pixel data size) (can be 0 for BI_RGB image)
+		--	(4 Bytes) biXPelsPerMeter;	--> horizontal Resolution (pixel per meter)
+		--	(4 Bytes) biYPelsPerMeter;	--> vertical Resolution (pixel per meter)
+		--	(4 Bytes) biClrUsed;		--> color palette
+		--	(4 Bytes) biClrImportant;	--> no. of important color table entries
+
+BMP_BIT_MAP_V4_HEADER - extension to BIT_MAP_INFO_HEADER (108 - 40 = 68 Bytes)
+		--	(4 Bytes) bV4RedMask;		--> mask selecting red bits of each pixel
+		--	(4 Bytes) bV4GreeMask;		--> mask selecting green bist of each pixel
+		--	(4 Bytes) bV4BlueMask;		--> mask selecting blue bits of each pixel
+		--	(4 Bytes) bV4AlphaMask;		--> mask selecting alpha bits of ach pixel
+		--	(4 Bytes) bV4CSType;		--> color space of the DIB
+		--	(4 Bytes) bV4Endpoints0;	--> xyz coordinates of RGB endpoints
+		--	(4 Bytes) bV4Endpoints1;	--> xyz coordinates of RGB endpoints
+		--	(4 Bytes) bV4Endpoints2;	--> xyz coordinates of RGB endpoints
+		--	(4 Bytes) bV4Endpoints3;	--> xyz coordinates of RGB endpoints
+		--	(4 Bytes) bV4Endpoints4;	--> xyz coordinates of RGB endpoints
+		--	(4 Bytes) bV4Endpoints5;	--> xyz coordinates of RGB endpoints
+		--	(4 Bytes) bV4Endpoints6;	--> xyz coordinates of RGB endpoints
+		--	(4 Bytes) bV4Endpoints7;	--> xyz coordinates of RGB endpoints
+		--	(4 Bytes) bV4Endpoints8;	--> xyz coordinates of RGB endpoints
+		--	(4 Bytes) bV4GammaRed;		--> Gamma response curve for red
+		--	(4 Bytes) bV4GammaGreen;	--> Gamma response curve for green
+		--	(4 Bytes) bV4GammaBlue;		--> Gamma response curve for Blue
+
+BMP_BIT_MAP_V5_HEADER - extension to BIT_MAP_V4_HEADER (124 - 108 = 16 Bytes)
+		--	(4 Bytes) bV5Intent;		--> rendering intent
+		--	(4 Bytes) bV5ProfileData;	--> offset to ICC profile
+		--	(4 Bytes) bV5ProfileSize;	--> size in bytes of embedded profile data
+		--	(4 Bytes) bV5Reserved;		--> must be zero
+
+
+BMP_BIT_MAP_OLD_HEADER = BMP_BIT_MAP_FILE_HEADER + BMP_BIT_MAP_CORE_HEADER (14 + 12 = 26 Bytes)
+BMP_BIT_MAP_NEW_HEADER = BMP_BIT_MAP_FILE_HEADER + BMP_BIT_MAP_INFO_HEADER + BMP_BIT_MAP_V4_HEADER(optional) + BMP_BIT_MAP_V5_HEADER(optional) (14 + 40 + 68 + 16 = 138 Bytes)
+
+

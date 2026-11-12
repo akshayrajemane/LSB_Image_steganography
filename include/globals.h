@@ -2,17 +2,31 @@
 #define GLOBALS_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifdef _WIN32
+	#define WIN32_OS 1
+	#define WIN64_OS 0
+	#define LIN_OS 0
 	#include <direct.h>
 	#include <stdint.h>
 #elif _WIN64
+	#define WIN32_OS 0
+	#define WIN64_OS 1
+	#define LIN_OS 0
 	#include <direct.h>
 	#include <stdint.h>
 #elif __linux__
+	#define _GNU_SOURCE
+	#define WIN32_OS 0
+	#define WIN64_OS 0
+	#define LIN_OS 1
 	#include <unistd.h>
-#else //Default OS is Windows
+#else //Default OS is Windows 64
+	#define WIN32_OS 0
+	#define WIN64_OS 1
+	#define LIN_OS 0
 	#include <direct.h>
 	#include <unistd.h>
 #endif
