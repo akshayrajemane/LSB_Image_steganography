@@ -35,6 +35,7 @@
 #include "config.h"
 #include "lib.h"
 #include "log.h"
+#include "queue_ch_s255b.h"
 
 extern double start_time_s;
 extern double start_time_ns;
