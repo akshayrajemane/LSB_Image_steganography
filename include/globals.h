@@ -37,13 +37,6 @@
 #include "log.h"
 #include "queue_ch_s255b.h"
 
-extern double start_time_s;
-extern double start_time_ns;
-
-extern char secret_msg_txt_file_name[MAX_FILE_NAME_SIZE];
-extern char secret_msg_txt_file_path[MAX_PATH_SIZE];
-extern char cover_medium_bmp_image_file_name[MAX_FILE_NAME_SIZE];
-extern char cover_medium_bmp_image_file_path[MAX_PATH_SIZE];
 
 typedef struct //Total - 14 Bytes
 {
@@ -127,5 +120,31 @@ typedef struct //Total - (14+40+68+16=138)
 	bmp_bit_map_v4_header v4_header;
 	bmp_bit_map_v5_header v5_header;
 } bmp_bit_map_new_header;
+
+
+//SECRET_MESSAGE_INFO_HEADER
+typedef struct
+{
+	char		magic_string[2];  //Size fixed temporarily
+	uint32_t	file_extension_length;
+	char		file_extension[4];	//Size fixed temporarily
+	uint64_t	secret_msg_data_size; 
+	
+} secret_msg_info_header;
+
+
+extern double start_time_s;
+extern double start_time_ns;
+
+extern char secret_msg_txt_file_name[MAX_FILE_NAME_SIZE];
+extern char secret_msg_txt_file_path[MAX_PATH_SIZE];
+extern char cover_medium_bmp_image_file_name[MAX_FILE_NAME_SIZE];
+extern char cover_medium_bmp_image_file_path[MAX_PATH_SIZE];
+extern char stego_object_file_path[MAX_PATH_SIZE];
+
+extern bmp_bit_map_new_header bmp_new_header;
+
+
+
 
 #endif
