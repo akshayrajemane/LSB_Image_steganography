@@ -28,7 +28,7 @@
 	#define WIN64_OS 1
 	#define LIN_OS 0
 	#include <direct.h>
-	#include <unistd.h>
+	#include <stdint.h>
 #endif
 
 

@@ -21,6 +21,11 @@
 	#define WIN64_OS 0
 	#define LIN_OS 1
 	#include <unistd.h>
+#else //Default OS is Windows 64
+	#define WIN32_OS 0
+	#define WIN64_OS 1
+	#define LIN_OS 0
+	#include <direct.h>
 #endif
 
 #include <stdarg.h>

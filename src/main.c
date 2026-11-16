@@ -31,7 +31,10 @@ int main()
 	{
 		log_info(get_time_stamp(start_time_s,start_time_ns), "main.c", "Valid BMP file.");
 		check_cover_medium_image_file_ok();
-		encode_secret_message_data(secret_msg_txt_file_path, cover_medium_bmp_image_file_path);
+		if(encode_secret_message_data(secret_msg_txt_file_path, cover_medium_bmp_image_file_path))
+		{
+			log_error(get_time_stamp(start_time_s,start_time_ns), "main.c", "Error encoding secret message data.");
+		}
 	}
 	
 	
